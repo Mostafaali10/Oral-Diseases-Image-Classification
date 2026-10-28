@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OralVision AI</title>
+  <style>
+    :root {
+      --bg: #0c1210;
+      --panel: #141c19;
+      --line: #24312c;
+      --text: #e7f2ec;
+      --muted: #8aa399;
+      --accent: #3ddc97;
+      --accent-dim: #163828;
+      --warn: #f0b429;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(900px 420px at 100% -10%, #163828 0%, transparent 55%),
+        var(--bg);
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 36px 20px 64px; }
+    header { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; margin-bottom: 28px; }
+    .mark { font-size: 13px; letter-spacing: 0.18em; color: var(--accent); margin: 0 0 6px; }
+    h1 { margin: 0; font-size: 40px; font-weight: 700; letter-spacing: -0.03em; }
+    .sub { margin: 8px 0 0; color: var(--muted); }
+    .chip { border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; color: var(--muted); font-size: 13px; }
+    .layout { display: grid; grid-template-columns: 320px 1fr; gap: 18px; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
+    form { display: grid; gap: 12px; }
+    input[type="file"] { width: 100%; color: var(--muted); }
+    button {
+      border: 0; cursor: pointer; border-radius: 12px; padding: 12px 16px;
+      background: var(--accent); color: #062116; font-weight: 700; font-size: 16px;
+    }
+    button:hover { filter: brightness(1.05); }
+    .error { color: #ffb4a8; margin: 0; }
+    .preview { margin-top: 14px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #0a0f0d; }
+    .preview img { display: block; width: 100%; max-height: 280px; object-fit: cover; }
+    .diagnosis { font-size: 42px; margin: 0; letter-spacing: -0.03em; }
+    .confidence { margin: 6px 0 18px; color: var(--accent); font-size: 28px; font-variant-numeric: tabular-nums; }
+    .bar-row { display: grid; grid-template-columns: 150px 1fr 52px; gap: 10px; align-items: center; margin: 10px 0; }
+    .bar-row span { color: var(--muted); font-size: 14px; }
+    .track { height: 10px; background: #0c1411; border-radius: 999px; overflow: hidden; }
+    .fill { height: 100%; background: linear-gradient(90deg, #1f8f62, var(--accent)); }
+    .bar-row strong { font-variant-numeric: tabular-nums; font-size: 14px; }
+    .empty { color: var(--muted); min-height: 220px; display: grid; align-content: center; }
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; }
+      h1 { font-size: 32px; }
+      .diagnosis { font-size: 32px; }
+      .bar-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <p class="mark">ORALVISION</p>
+        <h1>تشخيص صورة الفم</h1>
+        <p class="sub">ستة تصنيفات. النموذج: ResNet50 بعد ضبط المعاملات.</p>
+      </div>
+      <div class="chip">Test accuracy 90.8%</div>
+    </header>
+
+    <div class="layout">
+      <section class="panel">
+        <form method="POST" enctype="multipart/form-data">
+          <input type="file" name="file" accept="image/*" required>
+          <button type="submit">حلّل الصورة</button>
+        </form>
+        {% if error %}<p class="error">{{ error }}</p>{% endif %}
+        {% if filename %}
+        <div class="preview">
+          <img src="{{ url_for('uploaded', name=filename) }}" alt="الصورة المرفوعة">
+        </div>
+        {% endif %}
+      </section>
+
+      <section class="panel">
+        {% if result %}
+          <p class="mark">النتيجة</p>
+          <h2 class="diagnosis">{{ result.class }}</h2>
+          <p class="confidence">{{ result.confidence }}%</p>
+          {% for name, prob in result.all_probs.items() %}
+          <div class="bar-row">
+            <span>{{ name }}</span>
+            <div class="track"><div class="fill" style="width: {{ prob }}%"></div></div>
+            <strong>{{ prob }}%</strong>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty">
+            <p>ارفع صورة واضحة للأسنان أو اللثة.</p>
+            <p>هيظهر التشخيص ونسبة كل فئة.</p>
+          </div>
+        {% endif %}
+      </section>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+trial,learning_rate,unfreeze_fraction,epochs_ran,best_epoch_by_val_acc,best_val_accuracy_during_fit,val_accuracy,val_macro_f1,checkpoint
+lr1e-5_unfreeze25,1e-05,0.25,7,4,0.9230769276618958,0.9230769230769231,0.868264705642738,/kaggle/working/models/hparam_lr1e-5_unfreeze25.keras
+lr1e-5_unfreeze10,1e-05,0.1,8,6,0.9209401607513428,0.9209401709401709,0.8658843926318219,/kaggle/working/models/hparam_lr1e-5_unfreeze10.keras
+lr5e-6_unfreeze25,5e-06,0.25,4,1,0.9230769276618958,0.9230769230769231,0.8626356722981,/kaggle/working/models/hparam_lr5e-6_unfreeze25.keras
+lr1e-4_head_only,0.0001,0.0,8,5,0.9188033938407898,0.9188034188034188,0.8505416926979789,/kaggle/working/models/hparam_lr1e-4_head_only.keras

@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Large Model Weights (>100MB - cannot be pushed directly to GitHub)
+models/*.keras
+models/*.h5
+models/*.pt
+models/*.pth
+models/*.onnx
+!models/.gitkeep
+
+# Large Datasets and Images (Dataset images should not be pushed to GitHub)
+data/final/
+data/raw_clean/
+data/splits/
+data/*.rar
+data/*.zip
+data/*.tar.gz
+data/*.7z
+*.rar
+*.zip
+
+# App uploads & temporary files
+app/uploads/*
+!app/uploads/.gitkeep
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environments & secrets
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE & Editor files
+.vscode/
+.idea/

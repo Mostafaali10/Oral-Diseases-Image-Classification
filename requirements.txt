@@ -1,0 +1,14 @@
+tensorflow>=2.15
+keras
+numpy
+pandas
+Pillow
+imagehash
+scikit-learn
+matplotlib
+seaborn
+opencv-python
+flask
+werkzeug
+tqdm
+albumentations

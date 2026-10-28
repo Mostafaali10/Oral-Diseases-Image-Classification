@@ -1,0 +1,2 @@
+# Keep models directory structure in repository
+# Model files (.keras) exceed GitHub file size limits (>100MB)

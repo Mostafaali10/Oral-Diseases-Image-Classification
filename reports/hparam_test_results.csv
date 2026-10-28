@@ -1,0 +1,2 @@
+Model,Accuracy,Macro_F1,Macro_Precision,Macro_Recall
+resnet50_hparam_best,0.9081,0.8467,0.8868,0.8288
